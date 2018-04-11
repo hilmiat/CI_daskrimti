@@ -12,12 +12,14 @@
                     <td><?=$produk->nama_product?></td>
                     <td><?=$produk->harga?></td>
                     <td>
-        <?=anchor('Product/detail/'.$produk->id,'detail')?> 
-                        | update | 
-        <?=anchor(
-            'Product/hapus_produk/'.$produk->id,
-            'hapus',
-            'onclick="return confirm(\'Hapus?\')"')?>
+                        <?=anchor('Product/detail/'.$produk->id,'detail')?> 
+                        |  
+                        <?=anchor('Product/update/'.$produk->id,'update')?>  
+                        | 
+                        <?=anchor(
+                            'Product/hapus_produk/'.$produk->id,
+                            'hapus',
+                            'onclick="return confirm(\'Hapus?\')"')?>
             <!-- <a href="" onclick="return confirm('Hapus?')">hapus</a> -->
                     </td>
                 </tr>

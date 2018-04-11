@@ -18,8 +18,13 @@ class MProduct extends CI_Model{
     function getById($id){
         // $this->db->where('id',$id);
         // return $this->db->get($this->tbl_name)->row();
-        return $this->db
-        ->get_where($this->tbl_name,array('id'=>$id))->row();
+        // return $this->db
+        // ->get_where($this->tbl_name,array('id'=>$id))->row();
+        $this->db->select('*');
+        $this->db->from($this->tbl_name);
+        $this->db->join('kategori','product.id_kategori = kategori.id_kategori');
+        $this->db->where('id',$id);
+        return $this->db->get()->row();
     }
     function simpan($data){
         $this->db->insert($this->tbl_name,$data);
