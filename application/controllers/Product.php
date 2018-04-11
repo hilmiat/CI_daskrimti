@@ -5,6 +5,7 @@ class Product extends MY_Controller{
         parent::__construct();
         //load model
         $this->load->model('MProduct','mproduct');
+        $this->load->model('MJenis');
        
     }
     public function index(){
@@ -31,10 +32,10 @@ class Product extends MY_Controller{
         $this->form_validation->set_rules('harga','Harga','required');
         $this->form_validation->set_rules('deskripsi','Deskripsi','required');
 
-        $data['ar_jenis'] = $this->mjenis->getJenis();
-        
+        $data['ar_jenis'] = $this->MJenis->getJenis();
+
         if($this->form_validation->run() == FALSE){
-            $this->render('produk/form');
+            $this->render('produk/form',$data);
         }else{
             // if($this->input->get()){
                 $data = $this->input->get(array('nama_product','harga','deskripsi'));
@@ -44,5 +45,10 @@ class Product extends MY_Controller{
         }
        
         // $this->render('produk/form');
+    }
+    function cari_kategori($id_jenis){
+        $this->load->model('MKategori');
+        $kategori = $this->MKategori->getKategoriByJenis($id_jenis);
+        echo json_encode($kategori);
     }
 }

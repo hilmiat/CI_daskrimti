@@ -5,7 +5,7 @@
 
   <div class="form-group">
     <label for="jenis_product">Jenis Produk</label> 
-    <?php $ar_jenis=array('Elektronik','Pakaian','Otomotif');?>
+    <?php //$ar_jenis=array('Elektronik','Pakaian','Otomotif');?>
     <?=form_dropdown('jenis_product',
         $ar_jenis,
         set_value('jenis_product'),
@@ -58,13 +58,13 @@
         var dipilih = $(this).val();
         console.log('Dipilih:',dipilih);
         $.ajax({
-            url:"<?=site_url('product/cari_kategori/')?>"+dipilih,
+            url:"<?=site_url()?>"+"/product/cari_kategori/"+dipilih,
             type:'GET',
             success:function(data){
                 //hapus isi kategori
                 $('select[name="kategori_product"]').empty();
                 //isi dropdown kategori
-                $.each(data,function(k,v){
+                $.each(JSON.parse(data),function(k,v){
                     $('select[name="kategori_product"]')
                     .append('<option value="'+k+'">'+v+'</option>');
                 })
