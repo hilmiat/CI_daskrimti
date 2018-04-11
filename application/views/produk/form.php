@@ -2,6 +2,7 @@
 <?=form_open($action)?>
   <?=validation_errors('<div class="alert alert-danger" role="alert">','</div>');?>
  
+    <?=form_hidden('id_product',$product->id)?>
 
   <div class="form-group">
     <label for="jenis_product">Jenis Produk</label> 
@@ -11,6 +12,7 @@
         set_value('jenis_product',$product->id_jenis),
         'class="form-control"')?>
         <?=form_error('jenis_product','<small class="text-danger">','</small>')?>
+        <?=form_input('id_jenis','','class="form-control" disabled')?>
   </div>
   <div class="form-group">
     <label for="kategori_product">Kategori Produk</label> 
@@ -57,6 +59,7 @@
     $('select[name="jenis_product"]').on('change',function(){
         var dipilih = $(this).val();
         console.log('Dipilih:',dipilih);
+        $('input[name="id_jenis"]').val(dipilih);
         $.ajax({
             url:"<?=site_url()?>"+"/product/cari_kategori/"+dipilih,
             type:'GET',

@@ -9,7 +9,13 @@ class Product extends MY_Controller{
       	$this->load->helper('form'); 
     }
     public function index(){
-        $data_produk = $this->mproduct->getAllProduct();
+        //cek apakah ada pencarian
+        $cari='';
+        if($this->input->post()){
+            $cari = $this->input->post('search');
+        }
+        //cari data produk, dengan atau tanpa filter
+        $data_produk = $this->mproduct->getAllProduct($cari);
         $data['data_produk'] = $data_produk;
         $this->render('produk/index',$data);
     }
@@ -37,7 +43,8 @@ class Product extends MY_Controller{
        
         if($this->form_validation->run() == FALSE){
             $product = (object)array(
-                    'nama_product'=>'','harga'=>'','deskripsi'=>'','id_jenis'=>0,'id_kategori'=>0);
+                'id'=>0,'nama_product'=>'','harga'=>'','deskripsi'=>'','id_jenis'=>0,'id_kategori'=>0
+            );
             $data['product'] = $product;
             $data['kategori'] = array('-pilih kategori-');
             $data['action'] = 'product/add';
@@ -72,6 +79,16 @@ class Product extends MY_Controller{
         $data['kategori'] = $kategori;
         $data['action'] = 'product/ubah';
         $this->render('produk/form',$data);
+    }
+
+    public function ubah(){
+        //Baca data dari form
+        $data = $this->input->post(array('nama_product','harga','deskripsi','id_kategori'));
+        //baca id_product yang akan diupdate
+        $id = $this->input->post('id_product');
+        //update data melalui model
+        $this->mproduct->update($data,$id);
+        redirect('product');
     }
 
 }

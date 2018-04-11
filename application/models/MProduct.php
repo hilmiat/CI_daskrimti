@@ -2,11 +2,14 @@
 
 class MProduct extends CI_Model{
     var $tbl_name = 'product';
-    function getAllProduct(){
+    function getAllProduct($cari=''){
         // $this->load->database('default');
         // $sql = "SELECT * FROM produk";
         $this->db->select('*');
         $this->db->from($this->tbl_name);
+        if($cari !=''){
+            $this->db->like('nama_product',$cari);
+        }
         return $this->db->get()->result();
         // return $this->db->get('produk')->result();
     }
@@ -29,6 +32,9 @@ class MProduct extends CI_Model{
     function simpan($data){
         $this->db->insert($this->tbl_name,$data);
     }
-
+    function update($data,$id){
+        $this->db->where('id',$id);
+        $this->db->update($this->tbl_name,$data);
+    }
 
 }
